@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mathoperation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mathoperationservice
+  template:
+    metadata:
+      labels:
+        app: mathoperationservice
+    spec:
+      containers:
+        - name: mathoperationservice
+          image: camilostrobio/mathoperationservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mathoperation-clusterip-srv
+spec: 
+  type: ClusterIP
+  selector:
+    app: mathoperationservice
+  ports:
+  - name: mathoperationservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
